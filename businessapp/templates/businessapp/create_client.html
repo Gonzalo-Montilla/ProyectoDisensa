@@ -1,0 +1,23 @@
+<form method="post">
+    {% csrf_token %}
+    <label for="name">Nombre y Apellido:</label><br>
+    <input type="text" id="name" name="name" required><br>
+    <label for="identification">Cédula:</label><br>
+    <input type="text" id="identification" name="identification" required><br>
+    <label for="email">Email:</label><br>
+    <input type="email" id="email" name="email" required><br>
+    <label for="phone">Teléfono:</label><br>
+    <input type="tel" id="phone" name="phone" required><br>
+    <label for="purchase_value">Valor de la Compra:</label><br>
+    <input type="number" id="purchase_value" name="purchase_value" step="0.01" required><br>
+    <label for="city">Ciudad:</label><br>
+    <input type="text" id="city" name="city" required><br>
+    <label for="business_partner">Socio Comercial:</label><br>
+    <select id="business_partner" name="business_partner">
+        <option value="">Seleccione un socio</option>
+        {% for partner in partners %}
+            <option value="{{ partner.id }}">{{ partner.name }} - {{ partner.company }}</option>
+        {% endfor %}
+    </select><br>
+    <button type="submit">Guardar</button>
+</form>

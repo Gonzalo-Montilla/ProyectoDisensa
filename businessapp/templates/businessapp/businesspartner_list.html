@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Lista de Socios Comerciales</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}?v=1">
+  </head>
+  <body>
+    <h1>Lista de Socios Comerciales</h1>
+<ul>
+  {% for partner in partners %}
+    <li>{{ partner.name }} - {{ partner.city }} - {{ partner.affiliation_date }} - {{ partner.sales_history }}</li>
+  {% endfor %}
+</ul>
+</body>
+</html>
