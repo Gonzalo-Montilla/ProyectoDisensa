@@ -3,6 +3,21 @@ from .models import Client, BusinessPartner
 from django.contrib.auth import authenticate, login
 import pandas as pd
 from django.http import HttpResponse
+from django.utils.dateparse import parse_date
+from openpyxl import Workbook
+from django.utils.dateformat import format
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from businessapp.models import Client, BusinessPartner
+from django.contrib.auth import logout
+from django.shortcuts import redirect
+
+
+@login_required
+def logout_view(request):
+    logout(request)
+    return redirect('login')
+
 
 def client_list(request):
     if not request.user.is_authenticated:
@@ -24,6 +39,8 @@ def login_view(request):
         if user is not None:
             login(request, user)
             return redirect('dashboard')
+        else:
+            messages.error(request, 'Usuario o contraseña incorrectos.')
     return render(request, 'businessapp/login.html')
 
 def create_client(request):
@@ -32,7 +49,8 @@ def create_client(request):
         identification = request.POST.get('identification')
         email = request.POST.get('email')
         phone = request.POST.get('phone')
-        purchase_date = request.POST.get('purchase_date')  # Añadir este campo
+        purchase_date_str = request.POST.get('purchase_date')
+        purchase_date = parse_date(purchase_date_str) if purchase_date_str else None
         purchase_value = request.POST.get('purchase_value')
         city = request.POST.get('city')
         partner_id = request.POST.get('business_partner')
@@ -43,7 +61,7 @@ def create_client(request):
                 identification=identification,
                 email=email,
                 phone=phone,
-                purchase_date=purchase_date,  # Añadir este campo
+                purchase_date=purchase_date,
                 purchase_value=purchase_value,
                 city=city,
                 business_partner=business_partner
@@ -52,21 +70,32 @@ def create_client(request):
     partners = BusinessPartner.objects.all()
     return render(request, 'businessapp/create_client.html', {'partners': partners})
 
+@login_required
 def dashboard(request):
-    if not request.user.is_authenticated:
-        return redirect('login')
-    clients = Client.objects.all()
-    partners = BusinessPartner.objects.all()
+    clients = Client.objects.all().count()
+    partners = BusinessPartner.objects.all().count()
     return render(request, 'businessapp/dashboard.html', {'clients': clients, 'partners': partners})
 
 def export_clients_excel(request):
-    if not request.user.is_authenticated:
-        return redirect('login')
-    clients = Client.objects.all()
-    df = pd.DataFrame(list(clients.values('name', 'identification', 'purchase_date', 'purchase_value', 'city', 'business_partner__name')))
     response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
-    response['Content-Disposition'] = 'attachment; filename="clients.xlsx"'
-    df.to_excel(response, index=False)
+    response['Content-Disposition'] = 'attachment; filename="clientes.xlsx"'
+    workbook = Workbook()
+    worksheet = workbook.active
+    worksheet.title = 'Clientes'
+    headers = ['Nombre', 'Identificación', 'Fecha de Compra', 'Valor de Compra', 'Ciudad', 'Socio Comercial']
+    worksheet.append(headers)
+    clients = Client.objects.all()
+    for client in clients:
+        row = [
+            client.name,
+            client.identification if client.identification else '',
+            format(client.purchase_date, 'd/m/Y') if client.purchase_date else '',
+            str(client.purchase_value) if client.purchase_value else '',
+            client.city if client.city else '',
+            client.business_partner.name if client.business_partner else ''
+        ]
+        worksheet.append(row)
+    workbook.save(response)
     return response
 
 def export_partners_excel(request):
@@ -78,3 +107,4 @@ def export_partners_excel(request):
     response['Content-Disposition'] = 'attachment; filename="partners.xlsx"'
     df.to_excel(response, index=False)
     return response
+

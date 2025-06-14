@@ -1,20 +1,41 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Lista de Clientes</title>
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'css/style.css' %}?v=1" />
-  </head>
-  <body>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Clientes - CrediSmart</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background-color: #f4f4f4; }
+        h1 { color: #333; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #4CAF50; color: white; }
+        a { display: inline-block; margin-top: 10px; color: #007BFF; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
     <h1>Lista de Clientes</h1>
-    <ul>
-      {% for client in clients %}
-      <li>
-        {{ client.name }} - {{ client.identification }} - {{
-        client.purchase_date }} - {{ client.purchase_value }} - {{ client.city
-        }} - {{ client.business_partner.name }}
-      </li>
-      {% endfor %}
-    </ul>
-  </body>
+    <table>
+        <tr>
+            <th>Nombre</th>
+            <th>Identificación</th>
+            <th>Fecha de Compra</th>
+            <th>Valor de Compra</th>
+            <th>Ciudad</th>
+            <th>Socio Comercial</th>
+        </tr>
+        {% for client in clients %}
+            <tr>
+                <td>{{ client.name }}</td>
+                <td>{% if client.identification %}{{ client.identification }}{% else %}Sin Identificación{% endif %}</td>
+                <td>{% if client.purchase_date %}{{ client.purchase_date|date:"d/m/Y" }}{% else %}Sin Fecha{% endif %}</td>
+                <td>{% if client.purchase_value %}{{ client.purchase_value }}{% else %}Sin Valor{% endif %}</td>
+                <td>{% if client.city %}{{ client.city }}{% else %}Sin Ciudad{% endif %}</td>
+                <td>{% if client.business_partner %}{{ client.business_partner.name }}{% else %}Sin Socio{% endif %}</td>
+            </tr>
+        {% endfor %}
+    </table>
+    <a href="{% url 'create_client' %}">Crear Nuevo Cliente</a>
+</body>
 </html>
