@@ -32,16 +32,18 @@ def create_client(request):
         identification = request.POST.get('identification')
         email = request.POST.get('email')
         phone = request.POST.get('phone')
+        purchase_date = request.POST.get('purchase_date')  # Añadir este campo
         purchase_value = request.POST.get('purchase_value')
         city = request.POST.get('city')
         partner_id = request.POST.get('business_partner')
         business_partner = BusinessPartner.objects.get(id=partner_id) if partner_id else None
-        if name and identification and email and phone and purchase_value and city:
+        if name and identification and email and phone and purchase_date and purchase_value and city:
             Client.objects.create(
                 name=name,
                 identification=identification,
                 email=email,
                 phone=phone,
+                purchase_date=purchase_date,  # Añadir este campo
                 purchase_value=purchase_value,
                 city=city,
                 business_partner=business_partner
