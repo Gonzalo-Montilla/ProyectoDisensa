@@ -1,0 +1,16 @@
+{% extends 'businessapp/base.html' %}
+{% block title %}Crear Socio - CrediSmart{% endblock %}
+{% block content %}
+    <div class="card">
+        <h2>Crear Socio Comercial</h2>
+        <form method="post">
+            {% csrf_token %}
+            <label for="name">Nombre:</label><input type="text" name="name" required><br>
+            <label for="city">Ciudad:</label><input type="text" name="city" required><br>
+            <label for="affiliation_date">Fecha de Afiliación:</label><input type="date" name="affiliation_date"><br>
+            <label for="sales_history">Historial de Ventas:</label><input type="text" name="sales_history"><br>
+            <button type="submit">Crear Socio</button>
+        </form>
+        <a href="{% url 'partner_list' %}">Volver a la Lista</a>
+    </div>
+{% endblock %}

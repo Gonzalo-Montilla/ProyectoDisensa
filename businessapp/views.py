@@ -11,6 +11,7 @@ from django.contrib.auth.decorators import login_required
 from businessapp.models import Client, BusinessPartner
 from django.contrib.auth import logout
 from django.shortcuts import redirect
+from .models import Client, BusinessPartner
 
 
 @login_required
@@ -18,7 +19,7 @@ def logout_view(request):
     logout(request)
     return redirect('login')
 
-
+@login_required
 def client_list(request):
     if not request.user.is_authenticated:
         return redirect('login')
@@ -43,6 +44,7 @@ def login_view(request):
             messages.error(request, 'Usuario o contraseña incorrectos.')
     return render(request, 'businessapp/login.html')
 
+@login_required
 def create_client(request):
     if request.method == 'POST':
         name = request.POST.get('name')
@@ -107,4 +109,20 @@ def export_partners_excel(request):
     response['Content-Disposition'] = 'attachment; filename="partners.xlsx"'
     df.to_excel(response, index=False)
     return response
+
+@login_required
+def create_partner(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        city = request.POST.get('city')
+        affiliation_date = request.POST.get('affiliation_date')
+        sales_history = request.POST.get('sales_history')
+        BusinessPartner.objects.create(name=name, city=city, affiliation_date=affiliation_date, sales_history=sales_history)
+        return redirect('partner_list')
+    return render(request, 'businessapp/create_partner.html')
+
+@login_required
+def partner_list(request):
+    partners = BusinessPartner.objects.all()
+    return render(request, 'businessapp/partner_list.html', {'partners': partners})
 
