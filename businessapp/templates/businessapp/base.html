@@ -8,19 +8,21 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
-    <div class="navbar">
-        <img src="{% static 'businessapp/images/logo.png' %}" alt="CrediSmart Logo" class="logo">
-        <a href="{% url 'dashboard' %}">Dashboard</a>
-        <a href="{% url 'client_list' %}">Clientes</a>
-        <a href="{% url 'partner_list' %}">Socios</a>
-        <a href="{% url 'create_client' %}">Crear Cliente</a>
-        <a href="{% url 'create_partner' %}">Crear Socio</a>
-        {% if user.is_authenticated %}
+    {% if user.is_authenticated %}
+        <div class="navbar">
+            <img src="{% static 'images/logo_credismart_webp.webp' %}" alt="CrediSmart Logo" class="logo">
+            <a href="{% url 'dashboard' %}">Dashboard</a>
+            <a href="{% url 'client_list' %}">Clientes</a>
+            <a href="{% url 'partner_list' %}">Socios</a>
+            <a href="{% url 'create_client' %}">Crear Cliente</a>
+            <a href="{% url 'create_partner' %}">Crear Socio</a>
             <a href="{% url 'logout' %}">Cerrar Sesión</a>
-        {% else %}
-            <a href="{% url 'login' %}">Iniciar Sesión</a>
-        {% endif %}
-    </div>
+        </div>
+    {% else %}
+        <div class="login-header">
+            <img src="{% static 'images/logo_credismart_webp.webp' %}" alt="CrediSmart Logo" class="logo">
+        </div>
+    {% endif %}
     <div class="content">
         {% block content %}{% endblock %}
         {% if messages %}

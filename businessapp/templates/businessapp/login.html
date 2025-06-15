@@ -1,15 +1,19 @@
 {% extends 'businessapp/base.html' %}
 {% block title %}Iniciar Sesión - CrediSmart{% endblock %}
 {% block content %}
-    <div class="login-container">
-        <h1>Iniciar Sesión</h1>
+    <div class="card">
+        <h2>Iniciar Sesión</h2>
         <form method="post">
             {% csrf_token %}
-            <label for="username">Usuario:</label>
-            <input type="text" id="username" name="username" required>
-            <label for="password">Contraseña:</label>
-            <input type="password" id="password" name="password" required>
-            <button type="submit">Iniciar Sesión</button>
+            <div class="form-group">
+                <label for="username">Usuario:</label>
+                <input type="text" name="username" id="username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Contraseña:</label>
+                <input type="password" name="password" id="password" required>
+            </div>
+            <button type="submit" class="submit-button">Iniciar Sesión</button>
         </form>
     </div>
 {% endblock %}

@@ -1,9 +1,34 @@
 {% extends 'businessapp/base.html' %}
 {% block title %}Dashboard - CrediSmart{% endblock %}
 {% block content %}
-    <div class="card">
+    <div class="dashboard-container">
         <h2>Dashboard</h2>
-        <p>Total Clientes: {{ clients }}</p>
-        <p>Total Socios: {{ partners }}</p>
+        <div class="summary-cards">
+            <div class="summary-card">
+                <img src="{% static 'images/clients_icon.png' %}" alt="Clientes Icon" class="summary-icon">
+                <h3>Total Clientes</h3>
+                <p>{{ clients }}</p>
+            </div>
+            <div class="summary-card">
+                <img src="{% static 'images/partners_icon.png' %}" alt="Socios Icon" class="summary-icon">
+                <h3>Total Socios</h3>
+                <p>{{ partners }}</p>
+            </div>
+            <div class="summary-card">
+                <img src="{% static 'images/new_clients_icon.png' %}" alt="Nuevos Clientes Icon" class="summary-icon">
+                <h3>Clientes Nuevos</h3>
+                <p>{{ new_clients }}</p>
+            </div>
+            <div class="summary-card">
+                <img src="{% static 'images/revenue_icon.png' %}" alt="Ingresos Icon" class="summary-icon">
+                <h3>Ingresos Totales</h3>
+                <p>${{ total_revenue|floatformat:2 }}</p>
+            </div>
+            <div class="summary-card">
+                <img src="{% static 'images/active_partners_icon.png' %}" alt="Socios Activos Icon" class="summary-icon">
+                <h3>Socios Activos</h3>
+                <p>{{ active_partners }}</p>
+            </div>
+        </div>
     </div>
 {% endblock %}

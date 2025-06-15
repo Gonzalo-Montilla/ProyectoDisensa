@@ -6,6 +6,11 @@ class BusinessPartner(models.Model):
     affiliation_date = models.DateField(null=True, blank=True)
     sales_history = models.TextField(null=True, blank=True)
 
+    def calculate_sales_history(self):
+        from django.db.models import Sum
+        total = Client.objects.filter(business_partner=self).aggregate(total=Sum('purchase_value'))['total']
+        return total if total else 0.00
+
     def __str__(self):
         return self.name
 

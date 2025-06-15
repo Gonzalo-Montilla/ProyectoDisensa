@@ -5,22 +5,45 @@
         <h2>Crear Cliente</h2>
         <form method="post">
             {% csrf_token %}
-            <label for="name">Nombre:</label><input type="text" name="name" required><br>
-            <label for="identification">Identificación:</label><input type="text" name="identification"><br>
-            <label for="email">Email:</label><input type="email" name="email" required><br>
-            <label for="phone">Teléfono:</label><input type="text" name="phone" required><br>
-            <label for="purchase_date">Fecha de Compra:</label><input type="date" name="purchase_date" required><br>
-            <label for="purchase_value">Valor de Compra:</label><input type="number" step="0.01" name="purchase_value" required><br>
-            <label for="city">Ciudad:</label><input type="text" name="city"><br>
-            <label for="business_partner">Socio Comercial:</label>
-            <select name="business_partner">
-                <option value="">-- Seleccione un socio --</option>
-                {% for partner in partners %}
-                    <option value="{{ partner.id }}">{{ partner.name }}</option>
-                {% endfor %}
-            </select><br>
-            <button type="submit">Crear Cliente</button>
+            <div class="form-group">
+                <label for="name">Nombre:</label>
+                <input type="text" name="name" id="name" required>
+            </div>
+            <div class="form-group">
+                <label for="identification">Identificación:</label>
+                <input type="text" name="identification" id="identification">
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" name="email" id="email">
+            </div>
+            <div class="form-group">
+                <label for="phone">Teléfono:</label>
+                <input type="text" name="phone" id="phone">
+            </div>
+            <div class="form-group">
+                <label for="purchase_date">Fecha de Compra:</label>
+                <input type="date" name="purchase_date" id="purchase_date">
+            </div>
+            <div class="form-group">
+                <label for="purchase_value">Valor de Compra:</label>
+                <input type="number" name="purchase_value" id="purchase_value" step="0.01">
+            </div>
+            <div class="form-group">
+                <label for="city">Ciudad:</label>
+                <input type="text" name="city" id="city">
+            </div>
+            <div class="form-group">
+                <label for="business_partner">Socio Comercial:</label>
+                <select name="business_partner" id="business_partner">
+                    <option value="">--Seleccione un socio--</option>
+                    {% for partner in partners %}
+                        <option value="{{ partner.id }}">{{ partner.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button type="submit" class="submit-button">Crear Cliente</button>
         </form>
-        <a href="{% url 'client_list' %}">Volver a la Lista</a>
+        <a href="{% url 'client_list' %}" class="back-button">Volver a la Lista</a>
     </div>
 {% endblock %}

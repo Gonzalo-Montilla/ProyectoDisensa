@@ -12,7 +12,24 @@ from businessapp.models import Client, BusinessPartner
 from django.contrib.auth import logout
 from django.shortcuts import redirect
 from .models import Client, BusinessPartner
+import csv
+from django.db.models import Sum
 
+
+@login_required
+def dashboard(request):
+    clients = Client.objects.all().count()
+    partners = BusinessPartner.objects.all().count()
+    new_clients = Client.objects.filter(purchase_date__month=6, purchase_date__year=2025).count()  # Clientes nuevos este mes
+    total_revenue = Client.objects.aggregate(total=Sum('purchase_value'))['total'] or 0.00  # Ingresos totales
+    active_partners = BusinessPartner.objects.filter(sales_history__gt=0).count()  # Socios con ventas
+    return render(request, 'businessapp/dashboard.html', {
+        'clients': clients,
+        'partners': partners,
+        'new_clients': new_clients,
+        'total_revenue': total_revenue,
+        'active_partners': active_partners
+    })
 
 @login_required
 def logout_view(request):
@@ -78,6 +95,7 @@ def dashboard(request):
     partners = BusinessPartner.objects.all().count()
     return render(request, 'businessapp/dashboard.html', {'clients': clients, 'partners': partners})
 
+@login_required
 def export_clients_excel(request):
     response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     response['Content-Disposition'] = 'attachment; filename="clientes.xlsx"'
@@ -99,7 +117,7 @@ def export_clients_excel(request):
         worksheet.append(row)
     workbook.save(response)
     return response
-
+@login_required
 def export_partners_excel(request):
     if not request.user.is_authenticated:
         return redirect('login')
@@ -125,4 +143,15 @@ def create_partner(request):
 def partner_list(request):
     partners = BusinessPartner.objects.all()
     return render(request, 'businessapp/partner_list.html', {'partners': partners})
+
+@login_required
+def export_partners(request):
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="partners.csv"'
+    writer = csv.writer(response)
+    writer.writerow(['Nombre', 'Ciudad', 'Fecha de Afiliación', 'Historial de Ventas'])
+    partners = BusinessPartner.objects.all()
+    for partner in partners:
+        writer.writerow([partner.name, partner.city, partner.affiliation_date, partner.calculate_sales_history()])
+    return response
 

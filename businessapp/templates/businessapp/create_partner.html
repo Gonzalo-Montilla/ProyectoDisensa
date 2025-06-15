@@ -5,12 +5,20 @@
         <h2>Crear Socio Comercial</h2>
         <form method="post">
             {% csrf_token %}
-            <label for="name">Nombre:</label><input type="text" name="name" required><br>
-            <label for="city">Ciudad:</label><input type="text" name="city" required><br>
-            <label for="affiliation_date">Fecha de Afiliación:</label><input type="date" name="affiliation_date"><br>
-            <label for="sales_history">Historial de Ventas:</label><input type="text" name="sales_history"><br>
-            <button type="submit">Crear Socio</button>
+            <div class="form-group">
+                <label for="name">Nombre:</label>
+                <input type="text" name="name" id="name" required>
+            </div>
+            <div class="form-group">
+                <label for="city">Ciudad:</label>
+                <input type="text" name="city" id="city" required>
+            </div>
+            <div class="form-group">
+                <label for="affiliation_date">Fecha de Afiliación:</label>
+                <input type="date" name="affiliation_date" id="affiliation_date">
+            </div>
+            <button type="submit" class="submit-button">Crear Socio</button>
         </form>
-        <a href="{% url 'partner_list' %}">Volver a la Lista</a>
+        <a href="{% url 'partner_list' %}" class="back-button">Volver a la Lista</a>
     </div>
 {% endblock %}

@@ -1,16 +1,25 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Lista de Socios Comerciales</title>
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'css/style.css' %}?v=1">
-  </head>
-  <body>
-    <h1>Lista de Socios Comerciales</h1>
-<ul>
-  {% for partner in partners %}
-    <li>{{ partner.name }} - {{ partner.city }} - {{ partner.affiliation_date }} - {{ partner.sales_history }}</li>
-  {% endfor %}
-</ul>
-</body>
-</html>
+{% extends 'businessapp/base.html' %}
+{% block title %}Lista de Socios - CrediSmart{% endblock %}
+{% block content %}
+    <div class="card">
+        <h2>Lista de Socios Comerciales</h2>
+        <a href="{% url 'export_partners' %}" class="export-button">Exportar Socios</a>
+        <table>
+            <tr>
+                <th>Nombre</th>
+                <th>Ciudad</th>
+                <th>Fecha de Afiliación</th>
+                <th>Historial de Ventas</th>
+            </tr>
+            {% for partner in partners %}
+                <tr>
+                    <td>{{ partner.name }}</td>
+                    <td>{{ partner.city }}</td>
+                    <td>{% if partner.affiliation_date %}{{ partner.affiliation_date|date:"d/m/Y" }}{% else %}Sin Fecha{% endif %}</td>
+                    <td>{{ partner.calculate_sales_history|floatformat:2 }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+        <a href="{% url 'create_partner' %}">Crear Nuevo Socio</a>
+    </div>
+{% endblock %}

@@ -3,6 +3,7 @@
 {% block content %}
     <div class="card">
         <h2>Lista de Clientes</h2>
+        <a href="{% url 'export_clients' %}" class="export-button">Exportar Clientes</a>
         <table>
             <tr>
                 <th>Nombre</th>
