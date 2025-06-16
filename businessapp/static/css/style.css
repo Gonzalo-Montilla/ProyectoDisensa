@@ -14,7 +14,7 @@ body {
 
 /* Navbar */
 .navbar {
-    background-color: #386aaa;
+    background-color: #85bfe6;
     padding: 1rem;
     position: fixed;
     width: 100%;
@@ -22,12 +22,14 @@ body {
     z-index: 1000;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     display: flex;
-    align-items: center;
+    align-items: center;        
 }
 
 .navbar .logo {
-    height: 40px;
+    height: 90px;
     margin-right: 1.5rem;
+    vertical-align: middle; /* Alinea la imagen verticalmente */
+    transition: transform 0.3s ease; /* Añade una transición suave */
 }
 
 .navbar a {
@@ -35,6 +37,7 @@ body {
     text-decoration: none;
     margin-right: 1.5rem;
     font-weight: bold;
+    font-size: 1 rem;  
 }
 
 .navbar a:hover {
@@ -73,7 +76,7 @@ body {
 
 .login-container h1 {
     margin-bottom: 20px;
-    color: #386aaa;
+    color: #85bfe6;
 }
 
 .login-container label {
@@ -94,7 +97,7 @@ body {
 .login-container button {
     width: 100%;
     padding: 10px;
-    background-color: #386aaa;
+    background-color: #85bfe6;
     color: white;
     border: none;
     border-radius: 4px;
@@ -102,7 +105,7 @@ body {
 }
 
 .login-container button:hover {
-    background-color: #386aaa;
+    background-color: #85bfe6;
 }
 
 .error {
@@ -124,7 +127,7 @@ th, td {
 }
 
 th {
-    background-color: #386aaa;
+    background-color: #85bfe6;
     color: white;
 }
 
@@ -213,7 +216,7 @@ li {
 
 .login-header {
     padding: 10px;
-    background-color: #386aaa;
+    background-color: #85bfe6;
     text-align: center;
 }
 
@@ -225,7 +228,7 @@ li {
 /* Estilos existentes... */
 
 .dashboard-container {
-    padding: 20px;
+    padding: 40px;
     text-align: center;
 }
 
@@ -235,6 +238,15 @@ li {
     justify-content: center;
     gap: 20px;
     margin-top: 20px;
+    padding: 20px;
+    background-color: #f9f9f9; /* Fondo gris claro para las tarjetas */
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+
 }
 
 .summary-card {
@@ -244,6 +256,12 @@ li {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     width: 200px;
     text-align: center;
+    transition: transform 0.3s ease;   
+
+}
+.summary-card:hover {
+    transform: translateY(-5px); /* Efecto de elevación al pasar el mouse */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada */
 }
 
 .summary-icon {
@@ -261,7 +279,7 @@ li {
 .summary-card p {
     margin: 5px 0 0;
     font-size: 1.5em;
-    color: #386aaa;
+    color: #85bfe6;
     font-weight: bold;
 }
 
@@ -277,12 +295,12 @@ li {
 }
 
 .register-card h2 {
-    color: #386aaa;
+    color: #85bfe6;
     margin-bottom: 20px;
 }
 
 .success-message {
-    background-color: #386aaa; /* color fuente succes-message */
+    background-color: #85bfe6; /* color fuente succes-message */
     color: white;
     padding: 15px 20px;
     border-radius: 5px;
