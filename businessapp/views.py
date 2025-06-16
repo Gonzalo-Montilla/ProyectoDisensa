@@ -14,22 +14,42 @@ from django.shortcuts import redirect
 from .models import Client, BusinessPartner
 import csv
 from django.db.models import Sum
+from .models import BusinessPartner
+from django.db.models import Exists, OuterRef
+from .models import BusinessPartner, Client
+from django.contrib.auth.forms import UserCreationForm
+
 
 
 @login_required
 def dashboard(request):
-    clients = Client.objects.all().count()
-    partners = BusinessPartner.objects.all().count()
-    new_clients = Client.objects.filter(purchase_date__month=6, purchase_date__year=2025).count()  # Clientes nuevos este mes
-    total_revenue = Client.objects.aggregate(total=Sum('purchase_value'))['total'] or 0.00  # Ingresos totales
-    active_partners = BusinessPartner.objects.filter(sales_history__gt=0).count()  # Socios con ventas
-    return render(request, 'businessapp/dashboard.html', {
-        'clients': clients,
-        'partners': partners,
+    # Contar socios activos
+    active_partners = BusinessPartner.objects.annotate(
+        is_active=Exists(Client.objects.filter(business_partner=OuterRef('pk')))
+    ).filter(is_active=True).count()
+    
+    # Total de socios
+    total_partners = BusinessPartner.objects.count()
+    
+    # Total de clientes (asumiendo que Client es el modelo correcto)
+    total_clients = Client.objects.count()
+    
+    # Clientes nuevos (ejemplo: clientes creados en los últimos 30 días)
+    from django.utils import timezone
+    thirty_days_ago = timezone.now() - timezone.timedelta(days=30)
+    new_clients = Client.objects.filter(created_at__gte=thirty_days_ago).count()
+    
+    # Ingresos totales (suma de purchase_value de todos los clientes)
+    total_revenue = Client.objects.aggregate(total=Sum('purchase_value'))['total'] or 0.00
+
+    context = {
+        'clients': total_clients,
+        'partners': total_partners,
         'new_clients': new_clients,
         'total_revenue': total_revenue,
-        'active_partners': active_partners
-    })
+        'active_partners': active_partners,  # Cambiado de active_partners_count a active_partners para coincidir con la plantilla
+    }
+    return render(request, 'businessapp/dashboard.html', context)
 
 @login_required
 def logout_view(request):
@@ -89,11 +109,7 @@ def create_client(request):
     partners = BusinessPartner.objects.all()
     return render(request, 'businessapp/create_client.html', {'partners': partners})
 
-@login_required
-def dashboard(request):
-    clients = Client.objects.all().count()
-    partners = BusinessPartner.objects.all().count()
-    return render(request, 'businessapp/dashboard.html', {'clients': clients, 'partners': partners})
+
 
 @login_required
 def export_clients_excel(request):
@@ -154,4 +170,17 @@ def export_partners(request):
     for partner in partners:
         writer.writerow([partner.name, partner.city, partner.affiliation_date, partner.calculate_sales_history()])
     return response
+
+def register(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)  # Inicia sesión automáticamente después del registro
+            return redirect('dashboard')
+        else:
+            messages.error(request, 'Hubo un error al registrar. Por favor, verifica los datos.')
+    else:
+        form = UserCreationForm()
+    return render(request, 'businessapp/register.html', {'form': form})
 
