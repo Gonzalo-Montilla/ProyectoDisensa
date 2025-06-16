@@ -14,7 +14,7 @@ body {
 
 /* Navbar */
 .navbar {
-    background-color: #4CAF50;
+    background-color: #386aaa;
     padding: 1rem;
     position: fixed;
     width: 100%;
@@ -73,7 +73,7 @@ body {
 
 .login-container h1 {
     margin-bottom: 20px;
-    color: #4CAF50;
+    color: #386aaa;
 }
 
 .login-container label {
@@ -94,7 +94,7 @@ body {
 .login-container button {
     width: 100%;
     padding: 10px;
-    background-color: #4CAF50;
+    background-color: #386aaa;
     color: white;
     border: none;
     border-radius: 4px;
@@ -102,7 +102,7 @@ body {
 }
 
 .login-container button:hover {
-    background-color: #45a049;
+    background-color: #386aaa;
 }
 
 .error {
@@ -124,7 +124,7 @@ th, td {
 }
 
 th {
-    background-color: #4CAF50;
+    background-color: #386aaa;
     color: white;
 }
 
@@ -143,7 +143,7 @@ li {
 .export-button {
     display: inline-block;
     padding: 10px 20px;
-    background-color: #4CAF50;
+    background-color: #386aaa;
     color: white;
     text-decoration: none;
     border-radius: 4px;
@@ -151,7 +151,7 @@ li {
 }
 
 .export-button:hover {
-    background-color: #45a049;
+    background-color: #386aaa;
 }
 
 /* Estilos existentes... */
@@ -183,7 +183,7 @@ li {
 .submit-button {
     display: inline-block;
     padding: 10px 20px;
-    background-color: #4CAF50;
+    background-color: #386aaa;
     color: white;
     text-decoration: none;
     border: none;
@@ -193,7 +193,7 @@ li {
 }
 
 .submit-button:hover {
-    background-color: #45a049;
+    background-color: #386aaa;
 }
 
 .back-button {
@@ -213,7 +213,7 @@ li {
 
 .login-header {
     padding: 10px;
-    background-color: #4CAF50;
+    background-color: #386aaa;
     text-align: center;
 }
 
@@ -261,6 +261,53 @@ li {
 .summary-card p {
     margin: 5px 0 0;
     font-size: 1.5em;
-    color: #4CAF50;
+    color: #386aaa;
     font-weight: bold;
+}
+
+/* En style.css, al final */
+.register-card {
+    max-width: 400px;
+    margin: 100px auto;
+    padding: 30px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.register-card h2 {
+    color: #386aaa;
+    margin-bottom: 20px;
+}
+
+.success-message {
+    background-color: #386aaa; /* color fuente succes-message */
+    color: white;
+    padding: 15px 20px;
+    border-radius: 5px;
+    text-align: center;
+    font-family: 'Arial', sans-serif;
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    position: relative;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    max-width: 600px;
+    animation: fadeIn 0.5s ease-in;
+}
+
+.success-message a {
+    color: #fff;
+    text-decoration: underline;
+    
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }

@@ -176,7 +176,8 @@ def register(request):
         form = UserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
-            login(request, user)  # Inicia sesión automáticamente después del registro
+            login(request, user)
+            messages.success(request, '¡Registro exitoso! Bienvenido a CrediSmart.')
             return redirect('dashboard')
         else:
             messages.error(request, 'Hubo un error al registrar. Por favor, verifica los datos.')

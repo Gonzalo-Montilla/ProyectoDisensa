@@ -5,7 +5,17 @@
         <h2>Registro</h2>
         <form method="post">
             {% csrf_token %}
-            {{ form.as_p }}
+            {% for field in form %}
+                <div class="form-group">
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {{ field }}
+                    {% if field.errors %}
+                        {% for error in field.errors %}
+                            <p class="error">{{ error }}</p>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            {% endfor %}
             <button type="submit" class="submit-button">Registrarse</button>
         </form>
         <a href="{% url 'login' %}" class="back-button">Volver al Inicio de Sesión</a>

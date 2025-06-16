@@ -24,12 +24,14 @@
         </div>
     {% endif %}
     <div class="content">
-        {% block content %}{% endblock %}
         {% if messages %}
             {% for message in messages %}
-                <p class="error">{{ message }}</p>
+                <div class="success-message">
+                    {{ message }}
+                </div>
             {% endfor %}
         {% endif %}
+        {% block content %}{% endblock %}
     </div>
 </body>
 </html>
