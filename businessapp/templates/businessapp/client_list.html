@@ -1,29 +1,40 @@
 {% extends 'businessapp/base.html' %}
+{% load static %}
 {% block title %}Lista de Clientes - CrediSmart{% endblock %}
 {% block content %}
-    <div class="card">
-        <h2>Lista de Clientes</h2>
-        <a href="{% url 'export_clients' %}" class="export-button">Exportar Clientes</a>
-        <table>
-            <tr>
-                <th>Nombre</th>
-                <th>Identificación</th>
-                <th>Fecha de Compra</th>
-                <th>Valor de Compra</th>
-                <th>Ciudad</th>
-                <th>Socio Comercial</th>
-            </tr>
-            {% for client in clients %}
-                <tr>
-                    <td>{{ client.name }}</td>
-                    <td>{% if client.identification %}{{ client.identification }}{% else %}Sin Identificación{% endif %}</td>
-                    <td>{% if client.purchase_date %}{{ client.purchase_date|date:"d/m/Y" }}{% else %}Sin Fecha{% endif %}</td>
-                    <td>{% if client.purchase_value %}{{ client.purchase_value }}{% else %}Sin Valor{% endif %}</td>
-                    <td>{% if client.city %}{{ client.city }}{% else %}Sin Ciudad{% endif %}</td>
-                    <td>{% if client.business_partner %}{{ client.business_partner.name }}{% else %}Sin Socio{% endif %}</td>
-                </tr>
-            {% endfor %}
-        </table>
-        <a href="{% url 'create_client' %}">Crear Nuevo Cliente</a>
+    <div class="client-list-container">
+        <div class="card">
+            <h2>Lista de Clientes</h2>
+            <button class="submit-button" onclick="window.location.href='{% url 'export_clients' %}'">Exportar Clientes</button>
+            <button class="submit-button" onclick="window.location.href='{% url 'create_client' %}'">Crear Nuevo Cliente</button>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Identificación</th>
+                        <th>Fecha de Compra</th>
+                        <th>Valor de Compra</th>
+                        <th>Ciudad</th>
+                        <th>Socio Comercial</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for client in clients %}
+                        <tr>
+                            <td>{{ client.name }}</td>
+                            <td>{{ client.identification|default:'Sin Identificación' }}</td>
+                            <td>{{ client.purchase_date|date:"d/m/Y" }}</td> <!-- Cambio aquí -->
+                            <td>{{ client.purchase_value|floatformat:2 }}</td>
+                            <td>{{ client.city|default:'Sin Ciudad' }}</td>
+                            <td>{{ client.business_partner|default:'Sin Socio'|stringformat:"s" }}</td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="6">No hay clientes registrados.</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
 {% endblock %}

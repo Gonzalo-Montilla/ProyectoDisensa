@@ -4,10 +4,15 @@
 <head>
     <title>{% block title %}CrediSmart{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        .no-navbar .navbar {
+            display: none;
+        }
+    </style>
 </head>
-<body>
+<body class="{% if request.path == '/login/' or request.path == '/register/' %}no-navbar{% endif %}">
     <div class="navbar">
-        <img src="{% static 'images/logo_credismart_webp.webp.png' %}" alt="CrediSmart Logo" class="logo">
+        <img src="{% static 'images/logo_credismart.webp' %}" alt="CrediSmart Logo" class="logo">
         <a href="{% url 'dashboard' %}">Dashboard</a>
         <a href="{% url 'client_list' %}">Clientes</a>
         <a href="{% url 'partner_list' %}">Socios</a>
