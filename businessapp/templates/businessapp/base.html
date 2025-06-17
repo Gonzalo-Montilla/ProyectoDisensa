@@ -1,36 +1,21 @@
+{% load static %}
 <!DOCTYPE html>
-<html lang="es">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}CrediSmart{% endblock %}</title>
-    {% load static %}
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
-    {% if user.is_authenticated %}
-        <div class="navbar">
-            <img src="{% static 'images/logo_credismart_webp.webp.png' %}" alt="CrediSmart Logo" class="logo">
-            <a href="{% url 'dashboard' %}">Dashboard</a>
-            <a href="{% url 'client_list' %}">Clientes</a>
-            <a href="{% url 'partner_list' %}">Socios</a>
-            <a href="{% url 'create_client' %}">Crear Cliente</a>
-            <a href="{% url 'create_partner' %}">Crear Socio</a>
-            <a href="{% url 'logout' %}">Cerrar Sesión</a>
-        </div>
-    {% else %}
-        <div class="login-header">
-            <img src="{% static 'images/logo_credismart_webp.webp' %}" alt="CrediSmart Logo" class="logo">
-        </div>
-    {% endif %}
+    <div class="navbar">
+        <img src="{% static 'images/logo_credismart_webp.webp.png' %}" alt="CrediSmart Logo" class="logo">
+        <a href="{% url 'dashboard' %}">Dashboard</a>
+        <a href="{% url 'client_list' %}">Clientes</a>
+        <a href="{% url 'partner_list' %}">Socios</a>
+        <a href="{% url 'create_client' %}">Crear Cliente</a>
+        <a href="{% url 'create_partner' %}">Crear Socio</a>
+        <a href="{% url 'logout' %}">Cerrar Sesión</a>
+    </div>
     <div class="content">
-        {% if messages %}
-            {% for message in messages %}
-                <div class="success-message">
-                    {{ message }}
-                </div>
-            {% endfor %}
-        {% endif %}
         {% block content %}{% endblock %}
     </div>
 </body>

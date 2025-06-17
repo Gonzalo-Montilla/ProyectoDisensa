@@ -329,3 +329,13 @@ li {
     from { opacity: 0; }
     to { opacity: 1; }
 }
+
+.register-link {
+    color: #4CAF50;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.register-link:hover {
+    text-decoration: underline;
+}

@@ -1,0 +1,15 @@
+{% extends 'businessapp/base.html' %}
+
+{% block title %}Iniciar Sesión - CrediSmart{% endblock %}
+
+{% block content %}
+    <div class="card login-container" style="max-width: 400px; margin: 50px auto;">
+        <h2>Iniciar Sesión</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="submit-button">Iniciar Sesión</button>
+        </form>
+        <p>¿No tienes una cuenta? <a href="{% url 'register' %}" class="back-button">Registrarse</a></p>
+    </div>
+{% endblock %}
