@@ -1,25 +1,36 @@
 {% extends 'businessapp/base.html' %}
-{% block title %}Lista de Socios - CrediSmart{% endblock %}
+{% load static %}
+{% block title %}Lista de Socios Comerciales - CrediSmart{% endblock %}
 {% block content %}
-    <div class="card">
-        <h2>Lista de Socios Comerciales</h2>
-        <a href="{% url 'export_partners' %}" class="export-button">Exportar Socios</a>
-        <table>
-            <tr>
-                <th>Nombre</th>
-                <th>Ciudad</th>
-                <th>Fecha de Afiliación</th>
-                <th>Historial de Ventas</th>
-            </tr>
-            {% for partner in partners %}
-                <tr>
-                    <td>{{ partner.name }}</td>
-                    <td>{{ partner.city }}</td>
-                    <td>{% if partner.affiliation_date %}{{ partner.affiliation_date|date:"d/m/Y" }}{% else %}Sin Fecha{% endif %}</td>
-                    <td>{{ partner.sales_history|default:"Sin Historial" }}</td>
-                </tr>
-            {% endfor %}
-        </table>
-        <a href="{% url 'create_partner' %}">Crear Nuevo Socio</a>
+    <div class="partner-list-container">
+        <div class="card">
+            <h2>Lista de Socios Comerciales</h2>
+            <button class="submit-button" onclick="window.location.href='{% url 'export_partners' %}'">Exportar Socios</button>
+            <button class="submit-button" onclick="window.location.href='{% url 'create_partner' %}'">Crear Nuevo Socio</button>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Ciudad</th>
+                        <th>Fecha de Afiliación</th>
+                        <th>Historial de Ventas</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for partner in partners %}
+                        <tr>
+                            <td>{{ partner.name }}</td>
+                            <td>{{ partner.city|default:'Sin Ciudad' }}</td>
+                            <td>{{ partner.affiliation_date|date:"d/m/Y"|default:'Sin Fecha' }}</td>
+                            <td>{{ partner.sales_history|default:'Sin Historial' }}</td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="4">No hay socios registrados.</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
 {% endblock %}

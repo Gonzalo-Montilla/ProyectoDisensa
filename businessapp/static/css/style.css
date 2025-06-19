@@ -6,6 +6,8 @@
 }
 
 body {
+    margin: 0;
+    padding: 0;
     font-family: Arial, sans-serif;
     background-color: #d6d6d6; /* Tu fondo gris claro */
     color: #333;
@@ -31,6 +33,7 @@ body {
     vertical-align: middle; /* Alinea la imagen verticalmente */
     transition: transform 0.3s ease; /* Añade una transición suave */
 }
+
 
 .navbar a {
     color: white;
@@ -62,12 +65,16 @@ body {
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     text-align: center;
+    position: relative; /* Para que los elementos internos se alineen correctamente */
 }
 
 .card h2 {
     margin-bottom: 20px;
     color: #85bfe6;
-    font-size: 1.5em;
+    font-size: 2em;
+    font-family: 'Arial', sans-serif;
+    text-align: center;
+    visibility: visible; /* Asegura que los títulos sean visibles */
 }
 
 /* Formulario Login */
@@ -189,35 +196,50 @@ li {
 /* Estilos existentes... */
 
 .form-group {
-    margin-bottom: 10px;
+    margin-bottom: 20px; /* Más espacio entre campos */
+    text-align: left; /* Alineación a la izquierda para etiquetas */
+    max-width: 400px; /* Limita el ancho para centrar mejor */
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .form-group label {
     display: block;
-    font-weight: bold;
+    font-weight: 500;
     margin-bottom: 5px;
     color: #333;
-    font-weight: normal;
+    font-size: 1.1em; /* Tamaño de fuente para etiquetas */
+    font-family: 'Arial', sans-serif;
 }
 
-.form-group input {
-    width: 100%;
-    padding: 8px; /* Ajustar padding para coincidir con el login */
-    margin-bottom: 0; /* Eliminar margen inferior adicional */
-    border: 1px solid #ddd
-
-}
+.form-group input,
 .form-group select {
     width: 100%;
-    padding: 8px;
+    padding: 10px; /* Más padding en los inputs */
     border: 1px solid #ccc;
-    border-radius: 4px;
+    border-radius: 5px;
     box-sizing: border-box;
+    font-size: 1em; /* Tamaño de fuente para inputs */
+    font-family: 'Arial', sans-serif;
+    background-color: #f9f9f9; /* Fondo claro */
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    border-color: #85bfe6; /* Cambio de borde al enfocar */
+    outline: none;
+    box-shadow: 0 0 5px rgba(133, 191, 230, 0.5);
 }
 
 .form-group select {
     height: 40px;
 }
+
+.form-group input:hover,
+.form-group select:hover {
+    background-color: #fff; /* Cambio sutil al pasar el ratón */
+}
+
 
 .submit-button {
     width: 200px;
@@ -384,8 +406,81 @@ li {
     text-decoration: underline;
 }
 
-.client-list-container {
+.client-list-container,
+.partner-list-container,
+.create-client-container,
+.create-partner-container {
     padding: 40px;
     text-align: center;
     background: linear-gradient(135deg, #e0e0e0 0%, #f5f5f5 100%);
+    min-height: 100vh;
+    margin-top: 90px; /* Ajuste para el navbar */
 }
+
+.cancel-button {
+    width: 200px;
+    padding: 12px;
+    background-color: #e63946;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+    font-size: 1rem;
+}
+
+.cancel-button:hover {
+    background-color: #c22f3a;
+}
+
+.main-container {
+    padding: 40px;
+    text-align: center;
+    background: linear-gradient(135deg, #e0e0e0 0%, #f5f5f5 100%);
+    min-height: 100vh;
+    margin-top: 90px; /* Ajuste para evitar que se pegue al navbar fijo (ajusta según la altura del navbar) */
+}
+
+.button-group {    
+    margin-top: 20px; /* Espacio antes de los botones */
+    display: flex;
+    justify-content: center; /* Centra los botones */
+    gap: 20px; /* Espacio entre botones */
+    flex-wrap: wrap; /* Permite que los botones se ajusten en pantallas más pequeñas */
+       
+}
+
+.submit-button,
+.back-button {
+    padding: 12px 20px; /* Más ancho para los botones */
+    font-size: 1.1em; /* Fuente más grande */
+    font-family: 'Arial', sans-serif;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.submit-button {
+    background-color: #85bfe6;
+    color: white;
+    border: none;
+}
+
+.submit-button:hover {
+    background-color: #6daed9;
+}
+
+.back-button {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+}
+
+.back-button:hover {
+    background-color: #da190b;    
+}
+

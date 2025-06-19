@@ -12,15 +12,16 @@
 </head>
 <body class="{% if request.path == '/login/' or request.path == '/register/' %}no-navbar{% endif %}">
     <div class="navbar">
-        <img src="{% static 'images/logo_credismart.webp' %}" alt="CrediSmart Logo" class="logo">
+        <img src="{% static 'images/logo_credismart_webp.webp.png' %}" alt="CrediSmart Logo" class="logo">        
         <a href="{% url 'dashboard' %}">Dashboard</a>
         <a href="{% url 'client_list' %}">Clientes</a>
         <a href="{% url 'partner_list' %}">Socios</a>
         <a href="{% url 'create_client' %}">Crear Cliente</a>
         <a href="{% url 'create_partner' %}">Crear Socio</a>
-        <a href="{% url 'logout' %}">Cerrar Sesión</a>
+        <a href="{% url 'logout' %}">Cerrar Sesión</a>        
     </div>
-    <div class="content">
+    
+    <div class="main-container">
         {% block content %}{% endblock %}
     </div>
 </body>

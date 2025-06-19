@@ -22,6 +22,7 @@ from django.contrib.auth.forms import UserCreationForm
 
 
 
+
 @login_required
 def dashboard(request):
     # Contar socios activos

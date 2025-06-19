@@ -1,6 +1,8 @@
 {% extends 'businessapp/base.html' %}
-{% block title %}Crear Socio - CrediSmart{% endblock %}
+{% block title %}Crear Socio Comercial- CrediSmart{% endblock %}
 {% block content %}
+
+<div class="create-partner-container">
     <div class="card">
         <h2>Crear Socio Comercial</h2>
         <form method="post">
@@ -17,8 +19,12 @@
                 <label for="affiliation_date">Fecha de Afiliación:</label>
                 <input type="date" name="affiliation_date" id="affiliation_date">
             </div>
-            <button type="submit" class="submit-button">Crear Socio</button>
+            <div class="button-group">
+                <button type="submit" class="submit-button">Crear Socio</button>
+                <a href="{% url 'partner_list' %}" class="back-button">Volver a la Lista</a>
+            </div>
         </form>
-        <a href="{% url 'partner_list' %}" class="back-button">Volver a la Lista</a>
+        
     </div>
+</div>
 {% endblock %}
