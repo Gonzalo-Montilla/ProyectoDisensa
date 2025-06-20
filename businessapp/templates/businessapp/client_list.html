@@ -5,9 +5,12 @@
     <div class="client-list-container">
         <div class="card">
             <h2>Lista de Clientes</h2>
-            <button class="submit-button" onclick="window.location.href='{% url 'export_clients' %}'">Exportar Clientes</button>
-            <button class="submit-button" onclick="window.location.href='{% url 'create_client' %}'">Crear Nuevo Cliente</button>
-            <table>
+            <div class="button-group">
+                <input type="text" id="filterInput" placeholder="Filtrar por nombre o ciudad..." onkeyup="filterClients()">
+                <button class="submit-button" onclick="window.location.href='{% url 'export_clients' %}'">Exportar Clientes</button>
+                <button class="submit-button" onclick="window.location.href='{% url 'create_client' %}'">Crear Nuevo Cliente</button>
+            </div>
+            <table id="clientTable">
                 <thead>
                     <tr>
                         <th>Nombre</th>
@@ -23,10 +26,10 @@
                         <tr>
                             <td>{{ client.name }}</td>
                             <td>{{ client.identification|default:'Sin Identificación' }}</td>
-                            <td>{{ client.purchase_date|date:"d/m/Y" }}</td> <!-- Cambio aquí -->
+                            <td>{{ client.purchase_date|date:"d/m/Y"|default:'Sin Fecha' }}</td>
                             <td>{{ client.purchase_value|floatformat:2 }}</td>
                             <td>{{ client.city|default:'Sin Ciudad' }}</td>
-                            <td>{{ client.business_partner|default:'Sin Socio'|stringformat:"s" }}</td>
+                            <td>{{ client.business_partner.name|default:'Sin Socio' }}</td>
                         </tr>
                     {% empty %}
                         <tr>
@@ -37,4 +40,21 @@
             </table>
         </div>
     </div>
+    <script>
+        function filterClients() {
+            let input = document.getElementById("filterInput").value.toLowerCase();
+            let table = document.getElementById("clientTable");
+            let tr = table.getElementsByTagName("tr");
+
+            for (let i = 1; i < tr.length; i++) {
+                let tdName = tr[i].getElementsByTagName("td")[0];
+                let tdCity = tr[i].getElementsByTagName("td")[4];
+                    if (tdName && tdCity) {
+                    let textName = tdName.textContent ? tdName.textContent.toLowerCase() : "";
+                    let textCity = tdCity.textContent ? tdCity.textContent.toLowerCase() : "";
+                    tr[i].style.display = (textName.indexOf(input) > -1 || textCity.indexOf(input) > -1) ? "" : "none";
+                }
+            }
+        }
+    </script>
 {% endblock %}
