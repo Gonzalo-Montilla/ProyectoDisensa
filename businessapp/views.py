@@ -19,6 +19,7 @@ from django.db.models import Exists, OuterRef
 from .models import BusinessPartner, Client
 from django.contrib.auth.forms import UserCreationForm
 from .models import PartnerOnboarding
+from django.utils import timezone
 
 
 
@@ -34,13 +35,13 @@ def dashboard(request):
     # Total de socios
     total_partners = BusinessPartner.objects.count()
     
-    # Total de clientes (asumiendo que Client es el modelo correcto)
+    # Total de clientes 
     total_clients = Client.objects.count()
     
-    # Clientes nuevos (ejemplo: clientes creados en los últimos 30 días)
-    from django.utils import timezone
-    thirty_days_ago = timezone.now() - timezone.timedelta(days=30)
-    new_clients = Client.objects.filter(created_at__gte=thirty_days_ago).count()
+    # Clientes nuevos (ejemplo: clientes creados en los últimos 30 días)    
+    current_month = timezone.now().month
+    current_year = timezone.now().year
+    new_clients = Client.objects.filter(created_at__month=current_month, created_at__year=current_year).count()
     
     # Ingresos totales (suma de purchase_value de todos los clientes)
     total_revenue = Client.objects.aggregate(total=Sum('purchase_value'))['total'] or 0.00
@@ -186,6 +187,8 @@ def onboarding_status(request):
             if partner_name and not PartnerOnboarding.objects.filter(partner_name=partner_name).exists():
                 PartnerOnboarding.objects.create(partner_name=partner_name)
                 return redirect('onboarding_status')
+            else:
+                messages.error(request, f"El socio '{partner_name}' ya existe o el nombre está vacío. Por favor, usa un nombre diferente.")
         else:  # Actualizar etapa
             partner_id = request.POST.get('partner_id')
             stage = request.POST.get('stage')
