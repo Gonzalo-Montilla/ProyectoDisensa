@@ -288,9 +288,21 @@ li {
 /* Estilos existentes... */
 
 .dashboard-container {
-    padding: 40px;
+    padding: 60px;
     text-align: center;
-    background: linear-gradient(135deg, #e0e0e0 0%, #f5f5f5 100%); /* Gradiente suave en el fondo */
+    background: #fff; /* Gradiente suave en el fondo */
+    border-radius: 15px; /* Bordes redondeados */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    margin-top: 120px; /* Ajuste para el navbar */    
+}
+
+
+.dashboard-header {
+    color: #85bfe6;
+    font-size: 1.5em;
+    margin-bottom: 20px;
+    font-family: 'Arial', sans-serif;
+    padding: 20px;
 }
 
 .summary-cards {
@@ -337,11 +349,6 @@ li {
     font-weight: normal; /* Texto no negrita */
 }
 
-.summary-card h3 {
-    margin: 0;
-    font-size: 1.2em;
-    color: #333;
-}
 
 .summary-card p {
     margin: 5px 0 0;

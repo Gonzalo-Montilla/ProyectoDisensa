@@ -3,7 +3,12 @@
 {% block title %}Dashboard - CrediSmart{% endblock %}
 {% block content %}
     <div class="dashboard-container">
-        <h2>Dashboard</h2>
+        <div class="dashboard-header">
+            <h1>Bienvenid@, {{ user.username }}!</h1> 
+            <h2>Dashboard</h2>             
+        </div>       
+            
+
         <div class="summary-cards">
             <div class="summary-card">
                 <img src="{% static 'images/clients_icon.png' %}" alt="Clientes Icon" class="summary-icon">
