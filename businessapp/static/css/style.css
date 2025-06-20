@@ -34,13 +34,12 @@ body {
     transition: transform 0.3s ease; /* Añade una transición suave */
 }
 
-
 .navbar a {
     color: white;
     text-decoration: none;
     margin-right: 1.5rem;
     font-weight: bold;
-    font-size: 1 rem;  
+    font-size: 1rem;  
 }
 
 .navbar a:hover {
@@ -179,6 +178,7 @@ li {
     margin: 5px 0;
     border-radius: 5px;
 }
+
 .export-button {
     display: inline-block;
     padding: 10px 20px;
@@ -240,17 +240,18 @@ li {
     background-color: #fff; /* Cambio sutil al pasar el ratón */
 }
 
-
 .submit-button {
-    width: 200px;
+    width: 200px; /* Ancho fijo para consistencia */
     padding: 12px;
     background-color: #85bfe6;
     color: white;
     border: none;
-    border-radius: 4px;
+    border-radius: 5px;
     cursor: pointer;
     font-size: 1rem;
     margin: 10px;
+    display: inline-block; /* Asegura alineación correcta */
+    text-align: center;
 }
 
 .submit-button:hover {
@@ -315,8 +316,8 @@ li {
     width: 180px;
     text-align: center;
     transition: transform 0.3s ease, box-shadow 0.3s ease;   
-
 }
+
 .summary-card:hover {
     transform: translateY(-5px); /* Efecto de elevación al pasar el mouse */
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada */
@@ -388,7 +389,6 @@ li {
 .success-message a {
     color: #fff;
     text-decoration: underline;
-    
 }
 
 @keyframes fadeIn {
@@ -448,23 +448,21 @@ li {
     justify-content: center; /* Centra los botones */
     gap: 20px; /* Espacio entre botones */
     flex-wrap: wrap; /* Permite que los botones se ajusten en pantallas más pequeñas */
-       
-}
-
-.submit-button,
-.back-button {
-    padding: 12px 20px; /* Más ancho para los botones */
-    font-size: 1.1em; /* Fuente más grande */
-    font-family: 'Arial', sans-serif;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
 }
 
 .submit-button {
+    width: 180px; /* Ancho fijo para consistencia */
+    padding: 12px;
     background-color: #85bfe6;
     color: white;
     border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    margin: 10px;
+    display: inline-block; /* Asegura alineación correcta */
+    text-align: center;
+    transition: background-color 0.3s; /* Transición para hover */
 }
 
 .submit-button:hover {
@@ -472,15 +470,68 @@ li {
 }
 
 .back-button {
+    display: inline-block;
+    padding: 10px 20px;
     background-color: #f44336;
     color: white;
-    border: none;
     text-decoration: none;
-    display: inline-block;
-    text-align: center;
+    border-radius: 4px;
+    margin-top: 10px;
 }
 
 .back-button:hover {
     background-color: #da190b;    
 }
 
+#filterInput {
+    padding: 10px 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1em;
+    font-family: 'Arial', sans-serif;
+    background-color: #f9f9f9 !important; /* Forzamos el fondo */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important; /* Forzamos la sombra */
+    transition: border-color 0.3s, box-shadow 0.3s;
+    width: 200px; /* Ancho fijo para consistencia */
+    margin-right: 10px;
+    display: inline-block; /* Asegura que se comporte como elemento en línea */
+}
+
+/* Aseguramos que el foco y hover se apliquen correctamente */
+#filterInput:focus {
+    border-color: #85bfe6;
+    outline: none;
+    box-shadow: 0 0 5px rgba(133, 191, 230, 0.5) !important; /* Forzamos el foco */
+}
+
+#filterInput:hover {
+    background-color: #fff !important; /* Forzamos el hover */
+}
+
+/* Regla más específica para evitar conflictos */
+.client-list-container #filterInput,
+.partner-list-container #filterInput {
+    padding: 10px 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1em;
+    font-family: 'Arial', sans-serif;
+    background-color: #f9f9f9 !important; /* Forzamos el fondo */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important; /* Forzamos la sombra */
+    transition: border-color 0.3s, box-shadow 0.3s;
+    width: 200px;
+    margin-right: 10px;
+    display: inline-block;
+}
+
+.client-list-container #filterInput:focus,
+.partner-list-container #filterInput:focus {
+    border-color: #85bfe6;
+    outline: none;
+    box-shadow: 0 0 5px rgba(133, 191, 230, 0.5) !important; /* Forzamos el foco */
+}
+
+.client-list-container #filterInput:hover,
+.partner-list-container #filterInput:hover {
+    background-color: #fff !important; /* Forzamos el hover */
+}

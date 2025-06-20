@@ -6,7 +6,7 @@
         <div class="card">
             <h2>Lista de Socios Comerciales</h2>
             <div class="button-group">
-                <input type="text" id="filterInput" placeholder="Filtrar por nombre o ciudad..." onkeyup="filterPartners()">
+                <input type="text" id="filterInput" placeholder="Filtrar por nombre o ciudad" onkeyup="filterPartners()">
                 <button class="submit-button" onclick="window.location.href='{% url 'export_partners' %}'">Exportar Socios</button>
                 <button class="submit-button" onclick="window.location.href='{% url 'create_partner' %}'">Crear Nuevo Socio</button>
             </div>
