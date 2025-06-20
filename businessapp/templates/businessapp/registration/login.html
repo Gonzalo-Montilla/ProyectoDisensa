@@ -10,7 +10,7 @@
             {% csrf_token %}
             {{ form.as_p }}
             <button type="submit" class="submit-button" style="width: 100%; padding: 10px;">Iniciar Sesión</button>
-        </form>
-        <p>¿No tienes una cuenta? <a href="{% url 'register' %}" class="back-button">Registrarse</a></p>
+        </form>        
+        <p>¿No tienes una cuenta? <a href="{% url 'register' %}" class="back-button">Registrarse</a></p>        
     </div>
 {% endblock %}
