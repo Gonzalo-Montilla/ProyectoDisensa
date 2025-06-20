@@ -1,0 +1,70 @@
+{% extends 'businessapp/base.html' %}
+{% block title %}Onboarding Socios - CrediSmart{% endblock %}
+{% block content %}
+
+<div class="onboarding-container">
+    <div class="card">
+     <h2>Seguimiento Onboarding Socios Comerciales</h2>
+    <!-- Formulario para agregar nuevo socio -->
+        <form method="post" style="margin-bottom: 20px;">
+         {% csrf_token %}
+         <input type="text" name="partner_name" placeholder="Nombre del nuevo socio" required style="padding: 5px; margin-right: 10px;">
+         <button type="submit" name="new_partner" class="submit-button" style="padding: 5px 10px;">Agregar Socio</button>
+        </form>
+     <table class="onboarding-table">
+            <thead>
+             <tr>
+                 <th>Ferretería</th>
+                 <th>Presentación Enviada</th>
+                 <th>Documentos Recibidos</th>
+                    <th>Contrato Enviado</th>
+                    <th>Contrato Revisado</th>
+                 <th>Contrato Firmado</th>
+                 <th>Parametrización Realizada</th>
+                  <th>Capacitación Realizada</th>
+                  <th>Usuarios Creados</th>
+                  <th>Acciones</th>
+             </tr>
+            </thead>
+            <tbody>
+                {% for onboarding in onboarding_list %}
+                <tr class="{% if onboarding.is_active %}completed{% else %}pending{% endif %}">
+                    <td>{{ onboarding.partner_name }}</td>
+                    <td>{% if onboarding.presentation_sent %}✅{% else %}❌{% endif %}</td>
+                    <td>{% if onboarding.documents_received %}✅{% else %}❌{% endif %}</td>
+                    <td>{% if onboarding.contract_sent %}✅{% else %}❌{% endif %}</td>
+                 <td>{% if onboarding.contract_reviewed %}✅{% else %}❌{% endif %}</td>
+                 <td>{% if onboarding.contract_signed %}✅{% else %}❌{% endif %}</td>
+                    <td>{% if onboarding.parametrization_done %}✅{% else %}❌{% endif %}</td>
+                    <td>{% if onboarding.training_done %}✅{% else %}❌{% endif %}</td>
+                    <td>{% if onboarding.users_created %}✅{% else %}❌{% endif %}</td>
+                    <td>
+                      {% if not onboarding.is_active %}
+                     <form method="post" style="display:inline;">
+                           {% csrf_token %}
+                         <input type="hidden" name="partner_id" value="{{ onboarding.id }}">
+                         <select name="stage" onchange="this.form.submit()">
+                             <option value="">Marcar como completado</option>
+                             {% if not onboarding.presentation_sent %}<option value="presentation_sent">Presentación Enviada</option>{% endif %}
+                             {% if not onboarding.documents_received %}<option value="documents_received">Documentos Recibidos</option>{% endif %}
+                             {% if not onboarding.contract_sent %}<option value="contract_sent">Contrato Enviado</option>{% endif %}
+                              {% if not onboarding.contract_reviewed %}<option value="contract_reviewed">Contrato Revisado</option>{% endif %}
+                              {% if not onboarding.contract_signed %}<option value="contract_signed">Contrato Firmado</option>{% endif %}
+                              {% if not onboarding.parametrization_done %}<option value="parametrization_done">Parametrización Realizada</option>{% endif %}
+                              {% if not onboarding.training_done %}<option value="training_done">Capacitación Realizada</option>{% endif %}
+                               {% if not onboarding.users_created %}<option value="users_created">Usuarios Creados</option>{% endif %}
+                         </select>
+                        </form>
+                        {% else %}
+                        <span>Completado</span>
+                     {% endif %}
+                 </td>
+             </tr>
+                {% empty %}
+                <tr><td colspan="10">No hay socios en proceso de onboarding.</td></tr>
+             {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

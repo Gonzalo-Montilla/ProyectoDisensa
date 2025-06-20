@@ -57,7 +57,7 @@ body {
 
 /* Tarjetas */
 .card {
-    max-width: 900px;
+    max-width: 1200px;
     margin: 0 auto;
     padding: 30px;
     background: white;
@@ -583,4 +583,47 @@ li {
         display: block;
         margin: 5px 0;
     }
+}
+
+.onboarding-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    text-align: center;
+}
+
+.onboarding-table th, .onboarding-table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.onboarding-table th {
+    background-color: #85bfe6;
+    color: white;
+    font-weight: bold;
+}
+
+.onboarding-table tr.pending {
+    background-color: #ffebee; /* Rojo claro para pendientes */
+}
+
+.onboarding-table tr.completed {
+    background-color: #e8f5e9; /* Verde claro para completados */
+}
+
+.onboarding-table select {
+    padding: 5px;
+    font-size: 1em;
+    width: 100%;
+    max-width: 200px;
+}
+
+.onboarding-container {    
+    padding: 40px;
+    text-align: center;
+    background: linear-gradient(135deg, #e0e0e0 0%, #f5f5f5 100%);
+    min-height: 100vh;
+    margin-top: 90px; /* Ajuste para el navbar */
 }

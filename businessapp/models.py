@@ -47,3 +47,25 @@ class Client(models.Model):
 
     def __str__(self):
         return self.name
+    
+class PartnerOnboarding(models.Model):
+    partner_name = models.CharField(max_length=200, unique=True)
+    presentation_sent = models.BooleanField(default=False)
+    documents_received = models.BooleanField(default=False)
+    contract_sent = models.BooleanField(default=False)
+    contract_reviewed = models.BooleanField(default=False)
+    contract_signed = models.BooleanField(default=False)
+    parametrization_done = models.BooleanField(default=False)
+    training_done = models.BooleanField(default=False)
+    users_created = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.partner_name
+
+    @property
+    def is_active(self):
+        return all([self.presentation_sent, self.documents_received, self.contract_sent,
+                    self.contract_reviewed, self.contract_signed, self.parametrization_done,
+                    self.training_done, self.users_created])

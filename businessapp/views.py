@@ -18,6 +18,7 @@ from .models import BusinessPartner
 from django.db.models import Exists, OuterRef
 from .models import BusinessPartner, Client
 from django.contrib.auth.forms import UserCreationForm
+from .models import PartnerOnboarding
 
 
 
@@ -177,3 +178,18 @@ def register(request):
         form = UserCreationForm()
     return render(request, 'businessapp/register.html', {'form': form})
 
+def onboarding_status(request):
+    onboarding_list = PartnerOnboarding.objects.all()
+    if request.method == 'POST':
+        if 'new_partner' in request.POST:  # Crear nuevo socio
+            partner_name = request.POST.get('partner_name')
+            if partner_name and not PartnerOnboarding.objects.filter(partner_name=partner_name).exists():
+                PartnerOnboarding.objects.create(partner_name=partner_name)
+                return redirect('onboarding_status')
+        else:  # Actualizar etapa
+            partner_id = request.POST.get('partner_id')
+            stage = request.POST.get('stage')
+            partner = PartnerOnboarding.objects.get(id=partner_id)
+            setattr(partner, stage, True)
+            partner.save()
+    return render(request, 'businessapp/onboarding_status.html', {'onboarding_list': onboarding_list})
