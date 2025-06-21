@@ -1,10 +1,9 @@
 from django.urls import path
 from . import views
 from django.contrib.auth import views as auth_views
-from django.views.generic import RedirectView
 
 urlpatterns = [
-    path('', RedirectView.as_view(url='/login/', permanent=False), name='root'),
+    path('', views.dashboard, name='dashboard'),
     path('login/', auth_views.LoginView.as_view(template_name='businessapp/registration/login.html', next_page='dashboard'), name='login'),
     path('clients/', views.client_list, name='client_list'),
     path('partners/', views.partner_list, name='partner_list'),
