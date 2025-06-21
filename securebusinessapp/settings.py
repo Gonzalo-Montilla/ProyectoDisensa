@@ -14,12 +14,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-xxxxx'  # Cambia esto por una clave segura más tarde
+SECRET_KEY = os.getenv('SECRET_KEY', 'Chalo1721/*')  # Cambia esto por una clave segura más tarde o usa una variable de entorno
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']  # Temporal, lo actualizaremos con la URL de Render después
 
 # Application definition
 INSTALLED_APPS = [
@@ -34,6 +34,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # Añadido para manejar archivos estáticos en producción
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -70,6 +71,11 @@ DATABASES = {
     }
 }
 
+# Configuración para soportar PostgreSQL en Render a través de variable de entorno
+import dj_database_url
+db_from_env = dj_database_url.config(default='sqlite:///db.sqlite3', conn_max_age=600)
+DATABASES['default'].update(db_from_env)
+
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -94,8 +100,19 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'businessapp/static')]  # Apunta a la carpeta donde está style.css 
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATICFILES_DIRS = [BASE_DIR / 'businessapp/static']  # Añadido para incluir archivos estáticos de la app
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# Media files (si los usas)
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_REDIRECT_URL = '/'
+
+# Seguridad adicional (opcional pero recomendado, actívalo después del despliegue)
+# SECURE_SSL_REDIRECT = True
+# CSRF_COOKIE_SECURE = True
+# SESSION_COOKIE_SECURE = True
