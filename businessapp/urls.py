@@ -6,6 +6,7 @@ from django.views.generic import RedirectView
 urlpatterns = [
     path('', RedirectView.as_view(url='/login/', permanent=False), name='root'),  # Redirige a /login/
     path('login/', auth_views.LoginView.as_view(template_name='businessapp/registration/login.html', next_page='dashboard'), name='login'),
+    path('dashboard/', views.dashboard, name='dashboard'),
     path('clients/', views.client_list, name='client_list'),
     path('partners/', views.partner_list, name='partner_list'),
     path('create_client/', views.create_client, name='create_client'),
